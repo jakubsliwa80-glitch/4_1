@@ -27,23 +27,29 @@ app.get("/math/rectangle/:width/:height", (req, res) => {
 
 //4_1.3
 app.get("/math/power/:base/:exponent", (req, res) => {
-  const base = Number(req.params.base);
-  const exponent = Number(req.params.exponent);
-  const root = Boolean(req.query.root) || false;
+  try {
+    const base = Number(req.params.base);
+    const exponent = Number(req.params.exponent);
+    const root = Boolean(req.query.root) || false;
 
-  if (root) {
-    const result = {
-      power: Math.pow(base, exponent),
-      root: Math.pow(base, 1 / 2),
-    };
+    if (isNaN(base) || isNaN(exponent)) throw new Error("Invalid input");
 
-    res.json(result);
-  } else {
-    const result = {
-      power: Math.pow(base, exponent),
-    };
+    if (root) {
+      const result = {
+        power: Math.pow(base, exponent),
+        root: Math.pow(base, 1 / 2),
+      };
 
-    res.json(result);
+      res.json(result);
+    } else {
+      const result = {
+        power: Math.pow(base, exponent),
+      };
+
+      res.json(result);
+    }
+  } catch (error) {
+    res.json({ error: "Invalid input" });
   }
 });
 
