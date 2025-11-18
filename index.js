@@ -13,6 +13,16 @@ app.get("/math/circle/:r", (req, res) => {
 });
 
 //TODO2
+app.get("/math/rectangle/:width/:height", (req, res) => {
+  const width = Number(req.params.width);
+  const height = Number(req.params.height);
+
+  const result = {
+    area: width * height,
+    perimeter: 2 * (width + height),
+  };
+  res.json(result);
+});
 
 //TODO3
 
